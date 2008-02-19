@@ -1,32 +1,17 @@
 require File.dirname(__FILE__) + '/test_helper'
-
-class WhatController < ActionController::Base
-
-  def index
-    redirect_to_new if csv?
-  end
-  
-  def new
-  end
-  
-  protected
-  
-  def redirect_to_new
-    redirect_to new_what_url
-  end
-
-end
-
-WhatController.view_paths = [ File.dirname(__FILE__) + "/fixtures/" ]
+require File.dirname(__FILE__) + '/fixtures/what_controller'
 
 class WhatControllerTest < Test::Unit::TestCase
   
   def setup
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-
     @controller = WhatController.new
-    @request.host = "www.example.com"
+    ActionController::Routing::Routes.draw do |map|
+      map.connect 'what', :controller => 'what'
+      map.connect 'what/new', :controller => 'what', 
+        :action => 'new'
+    end
   end
 
   def test_html
@@ -38,7 +23,7 @@ class WhatControllerTest < Test::Unit::TestCase
   def test_csv
     @request.env["HTTP_ACCEPT"] = 'text/csv'
     get :index
-    assert_redirected_to new_what_url
+    assert_redirected_to :action => :new
   end
   
   # def test_new_convenience_methods
