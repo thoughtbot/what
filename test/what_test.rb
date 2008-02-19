@@ -20,6 +20,7 @@ end
 WhatController.view_paths = [ File.dirname(__FILE__) + "/fixtures/" ]
 
 class WhatControllerTest < Test::Unit::TestCase
+  
   def setup
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
@@ -39,4 +40,11 @@ class WhatControllerTest < Test::Unit::TestCase
     get :index
     assert_redirected_to new_what_url
   end
+  
+  # def test_new_convenience_methods
+  #   types = [:gif, :iphone, :mobile, :pdf, :png]
+  #   types.each do |type|
+  #     assert @controller.send("#{type}?"), "ActionController::Base does not have a #{type}? instance method"
+  #   end
+  # end
 end

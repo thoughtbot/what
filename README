@@ -2,7 +2,7 @@ What
 ====
 
 What provides boolean instance methods on controllers 
-for the following mime-types:
+for the native Rails mime-types:
 
 atom?
 css?
@@ -17,6 +17,14 @@ text?
 url_encoded_form?
 xml?
 yaml?
+
+... and soon will support a few other beauts:
+
+gif?
+iphone?
+mobile?
+pdf?
+png?
 
 
 Examples
