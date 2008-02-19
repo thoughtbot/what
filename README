@@ -1,0 +1,31 @@
+What
+====
+
+What provides boolean instance methods on controllers 
+for the following mime-types:
+
+atom?
+css?
+csv?
+html?
+ics?
+js?
+json?
+multipart_form?
+rss?
+text?
+url_encoded_form?
+xml?
+yaml?
+
+
+Examples
+========
+
+What is especially powerful in combination with When.
+
+before_filter :render_css_colors, :if => :css?
+before_filter :verify_admin, :if => :csv?
+
+
+Copyright (c) 2008 Dan Croak, released under the MIT license
