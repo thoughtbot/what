@@ -25,11 +25,14 @@ class WhatControllerTest < Test::Unit::TestCase
     get :index
     assert_redirected_to :action => :new
   end
-  
-  # def test_new_convenience_methods
-  #   types = [:gif, :iphone, :mobile, :pdf, :png]
-  #   types.each do |type|
-  #     assert @controller.send("#{type}?"), "ActionController::Base does not have a #{type}? instance method"
-  #   end
-  # end
+
+  types = [:gif, :pdf, :iphone, :mobile, :pdf, :png]
+  types.each do |type|
+    define_method "test_new_#{type}?_convenience_method" do
+      get :index, :format => type.to_s
+
+      assert @controller.send("#{type}?"), type
+    end
+  end
+
 end
