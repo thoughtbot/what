@@ -1,5 +1,5 @@
-require File.dirname(__FILE__) + '/test_helper'
-require File.dirname(__FILE__) + '/fixtures/what_controller'
+require File.join(File.dirname(__FILE__), 'test_helper')
+require File.join(File.dirname(__FILE__), 'fixtures', 'what_controller')
 
 class WhatControllerTest < Test::Unit::TestCase
   
