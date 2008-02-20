@@ -1,7 +1,7 @@
 What
 ====
 
-What provides boolean instance methods on controllers 
+What provides boolean query methods on Mime::Type instances 
 for the native Rails mime-types:
 
 atom?
@@ -18,22 +18,64 @@ url_encoded_form?
 xml?
 yaml?
 
-... and a few other beauts:
-
-gif?
-iphone?
-mobile?
-pdf?
-png?
-
+... and any custom mime types that you add in any environment specific config files.
 
 Examples
 ========
 
+__config/initializers/mime_types.rb__
+Mime::Type.register 'text/html', :blah
+
+__app/controllers/what_controller.rb__
+class WhatController < ApplicationController
+
+  before_filter :csv?,
+    :blah?
+
+  def index
+    render :text => 'index'
+  end
+
+  def csv?
+    if request.format.csv?
+      render :text => 'csv' and return false
+    end
+  end
+
+  def blah?
+    if request.format.blah?
+      render :text => 'blah' and return false
+    end
+  end
+
+end
+
 What is especially powerful in combination with When.
 
-before_filter :render_css_colors, :if => :css?
-before_filter :verify_admin, :if => :csv?
+__app/controllers/what_controller.rb__
+class WhatController < ApplicationController
 
+  before_filter :csv,
+    :if => :csv?
+  before_filter :blah,
+    :if => lambda {|controller| controller.request.format.blah?}
+
+  def index
+    render :text => 'index'
+  end
+
+  def csv
+    render :text => 'csv' and return false
+  end
+
+  def csv?
+    request.format.csv?
+  end
+
+  def blah
+    render :text => 'blah' and return false
+  end
+
+end
 
 Copyright (c) 2008 Dan Croak, Jared Carroll, and thoughtbot, inc. released under the MIT license

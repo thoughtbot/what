@@ -10,9 +10,9 @@ class WhatTest < Test::Unit::TestCase
     Mime::Type.register 'image/png', :png
   end
 
-  Mime::SET.each do |type|
-    define_method "test_new_#{type.to_sym}?_convenience_method" do
-      assert type.send("#{type.to_sym}?")
+  Mime::SET.each do |each|
+    define_method "test_should_say_its_a_#{each.to_sym}_mime_type_when_sent_#{each.to_sym}?" do
+      assert each.send("#{each.to_sym}?")
     end
   end
 
