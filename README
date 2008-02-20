@@ -18,7 +18,7 @@ url_encoded_form?
 xml?
 yaml?
 
-... and soon will support a few other beauts:
+... and a few other beauts:
 
 gif?
 iphone?
@@ -36,4 +36,4 @@ before_filter :render_css_colors, :if => :css?
 before_filter :verify_admin, :if => :csv?
 
 
-Copyright (c) 2008 Dan Croak, released under the MIT license
+Copyright (c) 2008 Dan Croak, Jared Carroll, and thoughtbot, inc. released under the MIT license
