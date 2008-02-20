@@ -2,49 +2,53 @@ What
 ====
 
 What provides boolean query methods on Mime::Type instances 
-for the native Rails mime-types:
+for the native Rails mime-types. You now have these methods
+available from your controllers:
 
-atom?
-css?
-csv?
-html?
-ics?
-js?
-json?
-multipart_form?
-rss?
-text?
-url_encoded_form?
-xml?
-yaml?
+request.format.atom?
+request.format.css?
+request.format.csv?
+request.format.html?
+request.format.ics?
+request.format.js?
+request.format.json?
+request.format.multipart_form?
+request.format.rss?
+request.format.text?
+request.format.url_encoded_form?
+request.format.xml?
+request.format.yaml?
 
 ... and any custom mime types that you add in any environment specific config files.
 
 Examples
 ========
 
-__config/initializers/mime_types.rb__
-Mime::Type.register 'text/html', :blah
+# config/initializers/mime_types.rb
 
-__app/controllers/what_controller.rb__
+Mime::Type.register 'text/iphone', :iphone
+
+# app/controllers/what_controller.rb
+
 class WhatController < ApplicationController
 
-  before_filter :csv?,
-    :blah?
+  before_filter :csv?, :iphone?
 
   def index
     render :text => 'index'
   end
 
+  protected
+
   def csv?
     if request.format.csv?
-      render :text => 'csv' and return false
+      redirect_to login_url
     end
   end
 
-  def blah?
-    if request.format.blah?
-      render :text => 'blah' and return false
+  def iphone?
+    if request.format.iphone?
+      redirect_to login_url
     end
   end
 
@@ -52,28 +56,25 @@ end
 
 What is especially powerful in combination with When.
 
-__app/controllers/what_controller.rb__
+# app/controllers/what_controller.rb
+
 class WhatController < ApplicationController
 
-  before_filter :csv,
-    :if => :csv?
-  before_filter :blah,
-    :if => lambda {|controller| controller.request.format.blah?}
+  before_filter :login, :if => :csv?
+  before_filter :login, :if => lambda { |controller| controller.request.format.iphone? }
 
   def index
     render :text => 'index'
   end
 
-  def csv
-    render :text => 'csv' and return false
-  end
+  protected
 
   def csv?
     request.format.csv?
   end
 
-  def blah
-    render :text => 'blah' and return false
+  def login
+    redirect_to login_url
   end
 
 end
